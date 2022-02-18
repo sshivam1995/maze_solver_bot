@@ -1,0 +1,29 @@
+<launch>
+    <!-- turtlebot start up node -->
+    <include file="$(find turtlebot3_bringup)/launch/turtlebot3_robot.launch"/>
+	
+    <!--turtlebot camera -->
+    <include file="$(find raspicam_node)/launch/camerav2_480x360_10fps.launch"/>
+
+    <!-- high level control node -->
+    <node name="algo_node" pkg="shivam_final_project" type="goToGoal.py" output="screen">
+
+	<rosparam param="k_pt">0.5</rosparam> <!-- 4.0 0.01 0.5 -->
+        <rosparam param="k_it">0.05</rosparam>
+        <rosparam param="k_dt">0.2</rosparam>
+    </node>
+
+    <!-- wheel driving node -->
+    <node name="chasing_node" pkg="shivam_final_project" type="chaseGoal.py" output="screen">
+	
+        <rosparam param="k_pd">0.5</rosparam> <!-- 0.4 0.05 0.0 -->
+        <rosparam param="k_id">0.015</rosparam>
+        <rosparam param="k_dd">0.02</rosparam>
+
+        <rosparam param="k_pt">0.5</rosparam> <!-- 4.0 0.01 0.5 -->
+        <rosparam param="k_it">0.05</rosparam>
+        <rosparam param="k_dt">0.2</rosparam>
+    </node>
+
+</launch>
+
